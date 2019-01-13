@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block body %}
+<h2>The greatest search of all time</h2>
+<b>Select a category to search</b>
+<form action="{{ url_for('group_search') }}", method="POST">
+    <select name="category" colours method="GET">
+        {% for cat in categories %}
+        <option value = "{{cat.id}}">{{ cat.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit", value = "Search">
+</form>
+{% endblock %}

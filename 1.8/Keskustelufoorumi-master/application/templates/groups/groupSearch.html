@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h1>Groups</h1>
+    {% for group in groups %}
+    <p>
+        <a href="{{ url_for('group_messages', group_id= group.id) }}"> {{ group.heading }} </a>
+        &nbsp; | Latest edit: {{ group.date_modified }} &nbsp;
+        {% if current_user.id == group.account_id %}
+        <a href="{{ url_for('modify_group_form', group_id=group.id) }}">edit</a> &nbsp;
+        {% endif %}
+        {% if current_user.is_authenticated %}
+        {% if current_user.id == group.account_id or current_user.get_role().role == "ADMIN" %}
+        <a href="{{ url_for('delete_group', group_id=group.id) }}">delete</a>
+        {% endif %}
+        {% endif %}
+    </p>
+
+    {% endfor %}
+{% endblock %}

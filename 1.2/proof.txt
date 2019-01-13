@@ -1,0 +1,5 @@
+sudo docker ps -aCONTAINER ID        IMAGE               COMMAND             CREATED             STATUS              PORTS               NAMES
+
+sudo docker images
+REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+

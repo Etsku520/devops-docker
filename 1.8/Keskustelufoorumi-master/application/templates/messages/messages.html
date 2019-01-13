@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1>{{ g.heading }}</h1>
+    <p>
+    {% for category in categories %}
+    {{ category.name }}, 
+    {% endfor %}
+    </p>
+    
+    <p>
+        -----------------
+    </p>
+    {% for message in messages %}
+    <p>
+        <div class='comment' width='0px' height='0px' border='0px' padding='0px'><b>{{ ug.get_account(message.account_id).name }}</b>:
+            ---------
+            {{ message.text }}
+            ---------
+            <b>Latest edit: {{ message.date_modified }}</b>
+        </div>
+        {% if current_user.is_authenticated %}
+        {% if current_user.id == message.account_id or current_user.get_role().role == "ADMIN" %}
+        <a href="{{ url_for('modify_message_form', message_id=message.id) }}">edit</a> &nbsp;
+        <form action="{{ url_for('delete_message', message_id=message.id) }}" method="POST" style="display: inline;">
+            <button style="width: 60px; height: 30px; color: red; background-color:white; display: inline;" type='submit' name='delete'>delete</button>
+        </form>
+        {% endif %}
+        {% endif %}
+    </p>
+    {% endfor %}
+    <b>Here is a box for making new messages. Why they aren't comments? Because I say so</b>
+    <form method="POST" action="{{ url_for('message_new', group_id= group_id) }}" id="newMessage">
+            <table>
+             <tr>
+              <td>
+               {{ form.name(cols="60", rows="5") }}
+              </td>
+             </tr>
+             <tr>
+              <td>    
+                <ul>
+                 {% for error in form.name.errors %}
+                 <li>{{ error }}</li>
+                 {% endfor %}
+                </ul>
+              </td>
+             <tr>
+              <td colspan="2">
+               <input type="submit" value="post message"/>
+              </td>
+             </tr>
+          </form>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block body %}
+<p>
+    <a href="{{ url_for('admin_users') }}">Users</a> &nbsp; | &nbsp;
+    <a href="{{ url_for('admin_categories') }}">Categories</a>
+</p>
+<h2>Categories</h2>
+{% for category in categories %}
+<p>
+    <form action="{{ url_for('delete_category', category_id=category.id) }}" method="POST" style="display: inline;">
+        {{ category.name }} | created: {{ category.date_created}}
+        <button style="width: 60px; height: 30px; color: red; background-color:white; display: inline;" type='submit' name='delete'>delete</button>
+    </form>
+</p>
+{% endfor %}
+<h2>Make category</h2>
+<form method="POST" id="newCategory">
+    <table>
+        <tr>
+            <td>
+                {{ form.name.label }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.name }}
+            </td>
+        </tr>
+        <tr>
+            <td>    
+                <ul>
+                    {{ error }}
+                    {% for error in form.name.errors %}
+                    <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="make a category"/>
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

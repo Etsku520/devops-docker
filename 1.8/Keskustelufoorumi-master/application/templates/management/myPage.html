@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h2>Your page</h2>
+<p>{{ current_user.name }}</p>
+<p>role: {{ role }}</p>
+<h3>Your groups: </h3>
+<tr>
+    <td>
+        {% for group in current_user.groups %}
+        <p>
+        <form action="{{ url_for('delete_group', group_id=group.id) }}" method="POST" style="display: inline;">
+            <a href="{{ url_for('group_messages', group_id= group.id) }}"> {{ group.heading }} </a>
+            &nbsp; | Latest edit: {{ group.date_modified }} &nbsp; 
+            {% if current_user.is_authenticated %}
+            {% if current_user.id == group.account_id or current_user.get_role().role == "ADMIN" %}
+            <a href="{{ url_for('modify_group_form', group_id=group.id) }}">edit</a> &nbsp;
+            <button style="width: 60px; height: 30px; color: red; background-color:white; display: inline;" type='submit' name='delete'>delete</button>
+            {% endif %}
+            {% endif %}
+        </form>
+        </p>
+        {% endfor %}
+    </td>
+</tr>
+{% endblock %}

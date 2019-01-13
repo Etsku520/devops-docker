@@ -1,0 +1,6 @@
+sudo docker run -it --rm ubuntu:16.04 sh -c 'read website; sleep 3; curl http://$website;'
+
+
+sudo docker exec a8 apt-get update
+
+sudo docker exec a8 apt-get install -y curl wget

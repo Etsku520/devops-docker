@@ -1,0 +1,6 @@
+Front
+sudo docker run --rm -p 5000:5000 c33
+
+Back
+sudo docker run --rm -v $(pwd)/logs.txt:/app/logs.txt -p 8000:8000 7a0
+

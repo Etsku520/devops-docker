@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+  
+{% block body %}
+<p>
+  <form method="POST" id="modifiedGroup">
+    <table>
+    <tr>
+      <td>
+        {{ form.heading.label }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+      {{ form.heading }}
+      </td>
+    </tr>
+    <tr>
+      <td>    
+        <ul>
+        {% for error in form.heading.errors %}
+        <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+      </td>
+      </tr>
+    <tr>
+      <td colspan="2">
+      <input type="submit" value="modify group"/>
+      </td>
+    </tr>
+  </form>
+</p>
+
+<p>
+    <a href="{{ url_for('add_groupcategory', group_id = group_id) }}">Add categories here</a>
+</p>
+<p>or change something else</p>
+
+{% for category in categories %}
+<p>
+  {{ category.name }}
+  <form action="{{ url_for('remove_groupcategory', group_id = group_id, category_id = category.id) }}" method="POST">
+    <input type="submit" value="remove category">
+  </form>
+</p>
+{% endfor %}
+<p>-----------</p>
+{% endblock %}
